@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Perjalanan Pesanan – Local Tailor</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --cream:   #F7F4EF;
+      --sand:    #E8E1D5;
+      --ink:     #1A1814;
+      --muted:   #6B6459;
+      --gold:    #B89A6A;
+      --gold-lt: #D4B98A;
+      --white:   #FFFFFF;
+      --done:    #B89A6A;
+      --pending: #C8BFB4;
+      --green:   #2D6A4F;
+    }
+
+    html { font-size: 16px; }
+    body {
+      background: var(--cream);
+      color: var(--ink);
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 300;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ── HEADER ── */
+    header {
+      background: var(--ink);
+      padding: 1.1rem 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.3rem;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      color: var(--white);
+      text-transform: uppercase;
+    }
+    .logo span { color: var(--gold); }
+    .header-tag {
+      font-size: 0.62rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    /* ── BISMILLAH BAND ── */
+    .bismillah-band {
+      background: var(--green);
+      padding: 0.55rem 1.5rem;
+      text-align: center;
+    }
+    .bismillah-ar {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.1rem;
+      color: var(--gold-lt);
+      letter-spacing: 0.05em;
+    }
+    .bismillah-tr {
+      font-size: 0.6rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.45);
+      margin-top: 0.15rem;
+    }
+
+    /* ── HERO ── */
+    .hero {
+      background: var(--ink);
+      padding: 2.25rem 1.5rem 2.75rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    }
+    .hero::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 50%;
+      transform: translateX(-50%);
+      width: 48px; height: 1px;
+      background: var(--gold);
+    }
+    .hero-eyebrow {
+      font-size: 0.6rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 0.6rem;
+    }
+    .hero-greeting {
+      font-size: 0.75rem;
+      color: rgba(255,255,255,0.45);
+      margin-bottom: 0.25rem;
+      letter-spacing: 0.05em;
+    }
+    .hero-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2rem;
+      font-weight: 400;
+      color: var(--white);
+      line-height: 1.15;
+      margin-bottom: 0.5rem;
+    }
+    .hero-name em {
+      font-style: italic;
+      color: var(--gold-lt);
+    }
+    .hero-order {
+      font-size: 0.68rem;
+      letter-spacing: 0.15em;
+      color: var(--muted);
+      text-transform: uppercase;
+    }
+
+    /* ── MAIN ── */
+    main {
+      flex: 1;
+      padding: 2rem 1.25rem 3rem;
+      max-width: 480px;
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    /* ── SECTION LABEL ── */
+    .section-label {
+      font-size: 0.58rem;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 1.15rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+    .section-label::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--sand);
+    }
+
+    /* ── ITEM CARD ── */
+    .item-card {
+      background: var(--white);
+      border-radius: 2px;
+      padding: 1.25rem;
+      margin-bottom: 2rem;
+      display: flex;
+      gap: 1rem;
+      align-items: flex-start;
+      box-shadow: 0 1px 8px rgba(26,24,20,0.06);
+    }
+    .item-thumb {
+      width: 64px; height: 80px;
+      background: var(--sand);
+      border-radius: 1px;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .item-thumb svg { opacity: 0.4; }
+    .item-info { flex: 1; }
+    .item-type {
+      font-size: 0.58rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 0.2rem;
+    }
+    .item-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.2rem;
+      font-weight: 600;
+      line-height: 1.2;
+      margin-bottom: 0.5rem;
+    }
+    .item-meta {
+      font-size: 0.71rem;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+    .item-meta b { color: var(--ink); font-weight: 500; }
+    .est-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      background: var(--sand);
+      border-radius: 20px;
+      padding: 0.28rem 0.7rem;
+      font-size: 0.68rem;
+      color: var(--muted);
+      margin-top: 0.55rem;
+    }
+    .est-badge b { color: var(--ink); font-weight: 500; }
+
+    /* ── TIMELINE ── */
+    .timeline { position: relative; margin-bottom: 2rem; }
+    .tl-step {
+      display: flex;
+      gap: 1rem;
+      padding-bottom: 1.75rem;
+    }
+    .tl-step:last-child { padding-bottom: 0; }
+    .tl-left {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 28px;
+      flex-shrink: 0;
+    }
+    .tl-dot {
+      width: 28px; height: 28px;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+      font-size: 0.62rem;
+      font-weight: 500;
+    }
+    .tl-dot.done    { background: var(--done); color: var(--white); }
+    .tl-dot.active  { background: var(--ink); color: var(--white); animation: pulse 2.4s ease-in-out infinite; }
+    .tl-dot.pending { background: var(--sand); color: var(--muted); }
+    @keyframes pulse {
+      0%,100% { box-shadow: 0 0 0 4px rgba(184,154,106,0.18); }
+      50%      { box-shadow: 0 0 0 8px rgba(184,154,106,0.06); }
+    }
+    .tl-line {
+      flex: 1; width: 1px; margin-top: 4px;
+      background: var(--sand); min-height: 20px;
+    }
+    .tl-line.done { background: var(--gold); }
+    .tl-step:last-child .tl-line { display: none; }
+    .tl-body { flex: 1; padding-top: 4px; }
+    .tl-title {
+      font-size: 0.85rem;
+      font-weight: 500;
+      margin-bottom: 0.15rem;
+    }
+    .tl-step.pending .tl-title { color: var(--muted); }
+    .tl-sub {
+      font-size: 0.72rem;
+      color: var(--muted);
+      line-height: 1.55;
+    }
+    .tl-date {
+      font-size: 0.63rem;
+      letter-spacing: 0.05em;
+      color: var(--gold);
+      margin-top: 0.2rem;
+      font-weight: 500;
+    }
+    .tl-photo {
+      margin-top: 0.65rem;
+      width: 100%;
+      max-width: 210px;
+      aspect-ratio: 4/3;
+      background: var(--sand);
+      border-radius: 2px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .tl-photo-placeholder {
+      font-size: 0.6rem;
+      color: var(--muted);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    /* ── ARTISAN CARD ── */
+    .artisan-card {
+      background: var(--white);
+      border-radius: 2px;
+      padding: 1.35rem 1.25rem;
+      margin-bottom: 2rem;
+      box-shadow: 0 1px 8px rgba(26,24,20,0.06);
+      display: flex;
+      gap: 1rem;
+      align-items: flex-start;
+    }
+    .artisan-avatar {
+      width: 72px; height: 72px;
+      border-radius: 50%;
+      background: var(--sand);
+      flex-shrink: 0;
+      overflow: hidden;
+      border: 2px solid var(--gold);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .artisan-avatar img { width: 100%; height: 100%; object-fit: cover; }
+    .artisan-avatar-placeholder {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.5rem;
+      color: var(--gold);
+      font-weight: 600;
+    }
+    .artisan-info { flex: 1; }
+    .artisan-label {
+      font-size: 0.58rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 0.2rem;
+    }
+    .artisan-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.2rem;
+      font-weight: 600;
+      line-height: 1.2;
+      margin-bottom: 0.3rem;
+    }
+    .artisan-spec {
+      font-size: 0.72rem;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+    .artisan-spec b { color: var(--ink); font-weight: 500; }
+    .artisan-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      background: #F0EBE3;
+      border-radius: 20px;
+      padding: 0.25rem 0.65rem;
+      font-size: 0.65rem;
+      color: var(--muted);
+      margin-top: 0.5rem;
+    }
+    .artisan-badge b { color: var(--gold); font-weight: 600; }
+
+    /* ── RATING ── */
+    .rating-card {
+      background: var(--white);
+      border-radius: 2px;
+      padding: 1.35rem 1.25rem;
+      margin-bottom: 2rem;
+      box-shadow: 0 1px 8px rgba(26,24,20,0.06);
+    }
+    .rating-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.05rem;
+      font-weight: 600;
+      margin-bottom: 0.25rem;
+    }
+    .rating-sub {
+      font-size: 0.72rem;
+      color: var(--muted);
+      margin-bottom: 1rem;
+      line-height: 1.5;
+    }
+    .stars {
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+    }
+    .star {
+      font-size: 1.75rem;
+      cursor: pointer;
+      color: var(--sand);
+      transition: color 0.15s, transform 0.15s;
+      user-select: none;
+      line-height: 1;
+    }
+    .star:hover,
+    .star.active { color: var(--gold); transform: scale(1.15); }
+    .rating-label {
+      font-size: 0.72rem;
+      color: var(--muted);
+      margin-bottom: 0.75rem;
+      min-height: 1rem;
+      font-style: italic;
+      transition: opacity 0.2s;
+    }
+    .rating-textarea {
+      width: 100%;
+      border: 1px solid var(--sand);
+      border-radius: 2px;
+      padding: 0.75rem;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.78rem;
+      color: var(--ink);
+      resize: none;
+      background: var(--cream);
+      outline: none;
+      line-height: 1.5;
+      transition: border-color 0.2s;
+    }
+    .rating-textarea:focus { border-color: var(--gold); }
+    .rating-textarea::placeholder { color: var(--muted); }
+    .rating-submit {
+      margin-top: 0.75rem;
+      width: 100%;
+      background: var(--ink);
+      color: var(--white);
+      border: none;
+      padding: 0.8rem;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.72rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      cursor: pointer;
+      border-radius: 1px;
+      transition: background 0.2s;
+    }
+    .rating-submit:hover { background: #2e2b26; }
+    .rating-thanks {
+      display: none;
+      text-align: center;
+      padding: 1rem 0;
+    }
+    .rating-thanks-ar {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.1rem;
+      color: var(--gold);
+      margin-bottom: 0.25rem;
+    }
+    .rating-thanks-text {
+      font-size: 0.75rem;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    /* ── NOTE ── */
+    .note-card {
+      background: var(--white);
+      border-left: 2px solid var(--gold);
+      padding: 1rem 1.1rem;
+      border-radius: 0 2px 2px 0;
+      margin-bottom: 2rem;
+    }
+    .note-label {
+      font-size: 0.58rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 0.35rem;
+    }
+    .note-text {
+      font-size: 0.78rem;
+      color: var(--muted);
+      line-height: 1.65;
+    }
+
+    /* ── CTA ── */
+    .cta-wrap { text-align: center; }
+    .cta-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: var(--ink);
+      color: var(--white);
+      text-decoration: none;
+      padding: 0.8rem 1.75rem;
+      font-size: 0.72rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      border-radius: 1px;
+      transition: background 0.2s;
+    }
+    .cta-btn:hover { background: #2e2b26; }
+    .cta-sub {
+      margin-top: 0.7rem;
+      font-size: 0.65rem;
+      color: var(--muted);
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--ink);
+      padding: 1.5rem;
+      text-align: center;
+    }
+    .footer-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 0.2rem;
+    }
+    .footer-ar {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 0.85rem;
+      color: rgba(184,154,106,0.5);
+      margin-bottom: 0.4rem;
+    }
+    .footer-addr {
+      font-size: 0.63rem;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+  </style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="logo">Local <span>Tailor</span></div>
+  <div class="header-tag">Bandung · Est. 2026</div>
+</header>
+
+<!-- BISMILLAH BAND -->
+<div class="bismillah-band">
+  <div class="bismillah-ar">بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيم</div>
+  <div class="bismillah-tr">Dengan nama Allah Yang Maha Pengasih lagi Maha Penyayang</div>
+</div>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-eyebrow">Perjalanan Karya Anda</div>
+  <div class="hero-greeting">Assalamu'alaikum warahmatullahi wabarakatuh</div>
+  <div class="hero-name"><em>Kang Jibril</em></div>
+  <div class="hero-order">No. Pesanan &nbsp;·&nbsp; LP00007</div>
+</div>
+
+<!-- MAIN -->
+<main>
+
+  <!-- ITEM -->
+  <div class="section-label">Detail Karya</div>
+  <div class="item-card">
+    <div class="item-thumb">
+      <svg width="28" height="34" viewBox="0 0 28 34" fill="none" stroke="#B89A6A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M14 2C10 2 7 5 7 8v2H4l-2 6h4v14h16V16h4l-2-6h-3V8c0-3-3-6-7-6z"/>
+        <line x1="14" y1="10" x2="14" y2="20"/>
+      </svg>
+    </div>
+    <div class="item-info">
+      <div class="item-type">Custom Thobe · Seri Nukhba</div>
+      <div class="item-title">Thobe Navy Dubai</div>
+      <div class="item-meta">
+        <b>Bahan</b> &nbsp;Wool Blended Import<br>
+        <b>Warna</b> &nbsp;Navy Dubai<br>
+        <b>Ukuran</b> &nbsp;Custom (hasil fitting)
+      </div>
+      <div class="est-badge">
+        <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+        Estimasi selesai &nbsp;<b>5 Juli 2026</b>
+      </div>
+    </div>
+  </div>
+
+  <!-- TIMELINE -->
+  <div class="section-label">Progres Pengerjaan</div>
+  <div class="timeline">
+
+    <div class="tl-step">
+      <div class="tl-left">
+        <div class="tl-dot done">✓</div>
+        <div class="tl-line done"></div>
+      </div>
+      <div class="tl-body">
+        <div class="tl-title">Pesanan Diterima & Sesi Fitting</div>
+        <div class="tl-sub">Konsultasi selesai. Pengukuran badan dan pilihan desain telah dikonfirmasi.</div>
+        <div class="tl-date">Senin, 16 Juni 2026 · 10:30 WIB</div>
+      </div>
+    </div>
+
+    <div class="tl-step">
+      <div class="tl-left">
+        <div class="tl-dot done">✓</div>
+        <div class="tl-line done"></div>
+      </div>
+      <div class="tl-body">
+        <div class="tl-title">Pemotongan & Penjahitan</div>
+        <div class="tl-sub">Kain telah dipotong sesuai pola. Proses jahit berjalan dengan teliti.</div>
+        <div class="tl-date">Rabu, 18 Juni 2026</div>
+        <div class="tl-photo">
+          <div class="tl-photo-placeholder">Foto Proses</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tl-step">
+      <div class="tl-left">
+        <div class="tl-dot active">●</div>
+        <div class="tl-line"></div>
+      </div>
+      <div class="tl-body">
+        <div class="tl-title">Quality Control & Finishing</div>
+        <div class="tl-sub">Pemeriksaan kualitas jahitan, detail finishing, dan pengecekan ukuran akhir.</div>
+        <div class="tl-date">Sedang berlangsung</div>
+      </div>
+    </div>
+
+    <div class="tl-step pending">
+      <div class="tl-left">
+        <div class="tl-dot pending">4</div>
+        <div class="tl-line"></div>
+      </div>
+      <div class="tl-body">
+        <div class="tl-title">Packing & Pengiriman</div>
+        <div class="tl-sub">Karya Anda dikemas dengan baik dan dikirimkan ke alamat tujuan.</div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ARTISAN -->
+  <div class="section-label">Sang Pengrajin</div>
+  <div class="artisan-card">
+    <div class="artisan-avatar">
+      <div class="artisan-avatar-placeholder">D</div>
+    </div>
+    <div class="artisan-info">
+      <div class="artisan-label">Master Artisan</div>
+      <div class="artisan-name">Ustaz Deka<br>Kurniawan</div>
+      <div class="artisan-spec">
+        <b>19 tahun</b> pengalaman<br>
+        Spesialis Thobe, Kemeja & Jas<br>
+        Menangani setiap detail dari potongan hingga finishing
+      </div>
+      <div class="artisan-badge">
+        ✦ &nbsp;<b>Thobe Custom</b> &nbsp;· Expert Level
+      </div>
+    </div>
+  </div>
+
+  <!-- NOTE -->
+  <div class="note-card">
+    <div class="note-label">Pesan dari Pengrajin</div>
+    <div class="note-text">
+      Jazakallahu khairan atas kepercayaan Kang Jibril. Setiap jahitan kami kerjakan dengan sepenuh hati dan penuh ketelitian. Semoga thobe ini menjadi kebanggaan dan keberkahan bagi Bapak. Insyaallah pesanan Bapak akan selesai tepat waktu.
+    </div>
+  </div>
+
+  <!-- RATING -->
+  <div class="section-label">Apresiasi untuk Pengrajin</div>
+  <div class="rating-card">
+    <div class="rating-title">Bagaimana pengalaman Anda?</div>
+    <div class="rating-sub">Penilaian Anda sangat berarti bagi pengrajin kami dan membantu kami terus berkembang.</div>
+    <div class="stars" id="stars">
+      <span class="star" data-val="1">★</span>
+      <span class="star" data-val="2">★</span>
+      <span class="star" data-val="3">★</span>
+      <span class="star" data-val="4">★</span>
+      <span class="star" data-val="5">★</span>
+    </div>
+    <div class="rating-label" id="ratingLabel">Ketuk bintang untuk memberi nilai</div>
+    <textarea class="rating-textarea" rows="3" placeholder="Ceritakan pengalaman Anda bersama Local Tailor... (opsional)"></textarea>
+    <button class="rating-submit" onclick="submitRating()">Kirim Apresiasi</button>
+    <div class="rating-thanks" id="ratingThanks">
+      <div class="rating-thanks-ar">جَزَاكَ اللّٰهُ خَيْرًا</div>
+      <div class="rating-thanks-text">Jazakallahu khairan — semoga kebaikan Anda dibalas berlipat ganda.<br>Apresiasi Anda telah kami sampaikan kepada pengrajin.</div>
+    </div>
+  </div>
+
+  <!-- CTA -->
+  <div class="cta-wrap">
+    <a href="https://wa.me/6282112345678" class="cta-btn">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.104.545 4.073 1.496 5.787L.057 23.883a.75.75 0 0 0 .918.918l6.096-1.439A11.944 11.944 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.778 9.778 0 0 1-4.99-1.364l-.358-.213-3.714.876.895-3.625-.234-.373A9.778 9.778 0 0 1 2.182 12C2.182 6.57 6.57 2.182 12 2.182S21.818 6.57 21.818 12 17.43 21.818 12 21.818z"/></svg>
+      Hubungi Kami
+    </a>
+    <div class="cta-sub">Jl. Gamelan No.10, Turangga, Bandung</div>
+  </div>
+
+</main>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">Local Tailor</div>
+  <div class="footer-ar">الخياطة هي فن وإتقان</div>
+  <div class="footer-addr">
+    Profesional · Elegan · Amanah<br>
+    Bandung, Jawa Barat · 2026
+  </div>
+</footer>
+
+<script>
+  const labels = ['','Perlu peningkatan','Cukup baik','Baik','Sangat baik','Luar biasa — Masya Allah!'];
+  let selected = 0;
+  const stars = document.querySelectorAll('.star');
+  const lbl   = document.getElementById('ratingLabel');
+
+  stars.forEach(s => {
+    s.addEventListener('mouseenter', () => highlight(+s.dataset.val));
+    s.addEventListener('mouseleave', () => highlight(selected));
+    s.addEventListener('click', () => {
+      selected = +s.dataset.val;
+      highlight(selected);
+      lbl.textContent = labels[selected];
+    });
+  });
+
+  function highlight(n) {
+    stars.forEach(s => s.classList.toggle('active', +s.dataset.val <= n));
+    if (n > 0 && n !== selected) lbl.textContent = labels[n];
+  }
+
+  function submitRating() {
+    if (!selected) { lbl.textContent = 'Silakan pilih bintang terlebih dahulu.'; return; }
+    document.querySelector('.rating-submit').style.display = 'none';
+    document.querySelector('.rating-textarea').style.display = 'none';
+    document.querySelector('.stars').style.display = 'none';
+    document.querySelector('.rating-sub').style.display = 'none';
+    document.querySelector('.rating-title').style.display = 'none';
+    document.getElementById('ratingLabel').style.display = 'none';
+    document.getElementById('ratingThanks').style.display = 'block';
+  }
+</script>
+
+</body>
+</html>
