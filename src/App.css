@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Poppins:wght@300;400;500;600&display=swap');
 
 * {
   margin: 0;
@@ -7,86 +7,90 @@
 }
 
 body {
-  font-family: 'Inter', sans-serif;
-  background: #0F0F1A;
-  color: #F2EDD7;
-  min-height: 100vh;
+  font-family: 'Poppins', sans-serif;
+  background: #0A0A12;
+  color: #E8E3D6;
 }
 
 .app {
   min-height: 100vh;
-  padding: 16px;
-  background: linear-gradient(135deg, #0F0F1A 0%, #1A1A2E 50%, #0F0F1A 100%);
+  padding: 12px;
+  background: linear-gradient(180deg, #0A0A12 0%, #141420 100%);
 }
 
 header {
-  background: linear-gradient(135deg, #1A1A2E 0%, #2C2C4A 100%);
-  border: 1px solid #C9A84C40;
-  padding: 24px;
-  border-radius: 16px;
-  margin-bottom: 24px;
-  box-shadow: 0 8px 32px rgba(201, 168, 76, 0.1);
+  background: linear-gradient(135deg, #1A1A28 0%, #2D2D3F 100%);
+  border: 1px solid rgba(201, 168, 76, 0.25);
+  padding: 20px 16px;
+  border-radius: 14px;
+  margin-bottom: 20px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(201, 168, 76, 0.1);
   position: relative;
   overflow: hidden;
 }
 
-header::before {
-  content: '✦';
+header::after {
+  content: '';
   position: absolute;
-  right: 24px;
-  top: 50%;
-  transform: translateY(-50%);
-  font-size: 48px;
-  color: #C9A84C20;
+  top: -50%;
+  right: -10%;
+  width: 300px;
+  height: 300px;
+  background: radial-gradient(circle, rgba(201, 168, 76, 0.05) 0%, transparent 70%);
+  border-radius: 50%;
 }
 
 header h1 {
   font-family: 'Playfair Display', serif;
-  font-size: 22px;
+  font-size: 20px;
   font-weight: 700;
-  color: #C9A84C;
-  letter-spacing: 2px;
+  color: #D4AF6A;
+  letter-spacing: 2.5px;
   text-transform: uppercase;
-  margin-bottom: 8px;
+  margin-bottom: 4px;
+  position: relative;
+  z-index: 1;
 }
 
 header p {
-  font-size: 13px;
-  color: #F2EDD780;
-  letter-spacing: 1px;
+  font-size: 12px;
+  color: rgba(232, 227, 214, 0.6);
+  letter-spacing: 1.2px;
+  font-weight: 500;
+  position: relative;
+  z-index: 1;
 }
 
 main {
-  max-width: 480px;
+  max-width: 520px;
   margin: 0 auto;
 }
 
 .dashboard h2 {
   font-family: 'Playfair Display', serif;
-  font-size: 18px;
-  color: #C9A84C;
-  margin-bottom: 16px;
-  letter-spacing: 1px;
-  display: flex;
-  align-items: center;
-  gap: 8px;
+  font-size: 16px;
+  color: #D4AF6A;
+  margin-bottom: 14px;
+  letter-spacing: 1.8px;
+  font-weight: 600;
 }
 
 .order-list {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 10px;
 }
 
 .order-card {
-  background: linear-gradient(135deg, #1A1A2E 0%, #2C2C4A 100%);
-  border: 1px solid #C9A84C30;
-  padding: 18px;
+  background: linear-gradient(135deg, #1A1A28 0%, #24243A 100%);
+  border: 1px solid rgba(201, 168, 76, 0.2);
+  padding: 16px;
   border-radius: 12px;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.3);
-  transition: all 0.3s ease;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   position: relative;
   overflow: hidden;
+  backdrop-filter: blur(10px);
 }
 
 .order-card::before {
@@ -96,61 +100,106 @@ main {
   top: 0;
   bottom: 0;
   width: 3px;
-  background: linear-gradient(180deg, #C9A84C, #8B6914);
+  background: linear-gradient(to bottom, #D4AF6A, #8B7D2F);
+  transition: width 0.3s ease;
 }
 
 .order-card:hover {
-  border-color: #C9A84C60;
-  box-shadow: 0 8px 32px rgba(201, 168, 76, 0.15);
-  transform: translateY(-2px);
+  border-color: rgba(201, 168, 76, 0.4);
+  box-shadow: 0 8px 24px rgba(201, 168, 76, 0.12);
+  transform: translateY(-3px);
+}
+
+.order-card:hover::before {
+  width: 4px;
 }
 
 .order-card h3 {
   font-family: 'Playfair Display', serif;
-  font-size: 15px;
-  color: #C9A84C;
-  margin-bottom: 8px;
-  letter-spacing: 1px;
+  font-size: 14px;
+  color: #D4AF6A;
+  margin-bottom: 6px;
+  letter-spacing: 0.8px;
+  font-weight: 600;
 }
 
 .order-card p {
-  font-size: 13px;
-  color: #F2EDD790;
-  margin-bottom: 4px;
-  display: flex;
-  align-items: center;
-  gap: 6px;
+  font-size: 12px;
+  color: rgba(232, 227, 214, 0.7);
+  margin-bottom: 3px;
+  line-height: 1.4;
+}
+
+.order-status {
+  display: inline-block;
+  background: rgba(212, 175, 106, 0.15);
+  border: 1px solid rgba(212, 175, 106, 0.3);
+  color: #D4AF6A;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  margin-top: 8px;
 }
 
 .btn-scan {
-  margin-top: 14px;
-  padding: 12px 20px;
-  background: linear-gradient(135deg, #C9A84C 0%, #8B6914 100%);
-  color: #0F0F1A;
+  margin-top: 12px;
+  padding: 12px 16px;
+  background: linear-gradient(135deg, #D4AF6A 0%, #C9A84C 100%);
+  color: #0A0A12;
   border: none;
   border-radius: 8px;
-  font-size: 13px;
+  font-size: 12px;
   font-weight: 700;
   cursor: pointer;
   letter-spacing: 1.5px;
   text-transform: uppercase;
   width: 100%;
   transition: all 0.3s ease;
-  font-family: 'Inter', sans-serif;
+  font-family: 'Poppins', sans-serif;
+  box-shadow: 0 4px 12px rgba(212, 175, 106, 0.25);
 }
 
 .btn-scan:hover {
-  background: linear-gradient(135deg, #D4B86A 0%, #C9A84C 100%);
-  box-shadow: 0 4px 20px rgba(201, 168, 76, 0.4);
+  background: linear-gradient(135deg, #E5C580 0%, #D4AF6A 100%);
+  box-shadow: 0 6px 20px rgba(212, 175, 106, 0.4);
+  transform: translateY(-2px);
+}
+
+.btn-scan:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 8px rgba(212, 175, 106, 0.3);
+}
+
+.production-steps {
+  display: flex;
+  justify-content: space-between;
+  gap: 4px;
+  margin: 10px 0 8px 0;
+  font-size: 11px;
+}
+
+.step {
+  flex: 1;
+  text-align: center;
+  padding: 6px 4px;
+  background: rgba(212, 175, 106, 0.1);
+  border-radius: 4px;
+  color: rgba(232, 227, 214, 0.6);
+  border: 1px solid rgba(212, 175, 106, 0.15);
+}
+
+.step.active {
+  background: rgba(212, 175, 106, 0.25);
+  color: #D4AF6A;
+  border-color: rgba(212, 175, 106, 0.3);
+  font-weight: 600;
 }
 
 .empty-state {
   text-align: center;
-  padding: 48px 24px;
-  color: #F2EDD750;
-}
-
-.empty-state p {
-  font-size: 14px;
-  margin-top: 12px;
+  padding: 48px 20px;
+  color: rgba(232, 227, 214, 0.4);
 }
