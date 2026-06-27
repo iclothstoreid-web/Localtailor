@@ -145,7 +145,6 @@ function OrderDetailView({ order, customer, fitting, steps, currentStepIdx, onNe
     </div>
   )
 }
-
 function ProductionStep({ step, isActive, isCompleted, expanded, onToggle, fitting, material }) {
   const statusIcon = isCompleted ? '✓' : isActive ? '●' : '○'
   const statusClass = isCompleted ? 'completed' : isActive ? 'active' : ''
