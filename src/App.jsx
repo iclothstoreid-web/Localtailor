@@ -155,28 +155,26 @@ function ProductionStep({ step, isActive, isCompleted, expanded, onToggle, fitti
       <div className="step-header" onClick={onToggle}>
         <span className="step-icon">{statusIcon}</span>
         <span className="step-name">{step.name}</span>
-        {step.code === 'FITTING' && <span className="expand-icon">{expanded ? '▼' : '▶'}</span>}
+        {(step.code === 'FITTING' || step.code === 'MATERIAL_CONFIRMATION') && <span className="expand-icon">{expanded ? '▼' : '▶'}</span>}
       </div>
 
-      {/* FITTING Details */}
-      {expanded && fitting && (
+      {/* FITTING Details — expanded */}
+      {expanded && step.code === 'FITTING' && fitting && (
         <div className="step-details">
-          <p><strong>Collar:</strong> {fitting.lingkar_leher}cm</p>
-          <p><strong>Cuff:</strong> {fitting.lingkar_pergelangan}cm</p>
-          <p><strong>Chest:</strong> {fitting.lingkar_dada}cm</p>
-          <p><strong>Length:</strong> {fitting.panjang_baju}cm</p>
+          <p><strong>Collar:</strong> {fitting.lingkar_leher || '—'}cm</p>
+          <p><strong>Cuff:</strong> {fitting.lingkar_pergelangan || '—'}cm</p>
+          <p><strong>Chest:</strong> {fitting.lingkar_dada || '—'}cm</p>
+          <p><strong>Length:</strong> {fitting.panjang_baju || '—'}cm</p>
         </div>
       )}
 
-      {/* FORMULASI & POLA Details */}
-      {isActive && step.name === 'FORMULASI & POLA' && material && (
+      {/* FORMULASI & POLA Details — ALWAYS show material, even when not active */}
+      {step.code === 'MATERIAL_CONFIRMATION' && material && (
         <div className="step-details">
-          <p><strong>Material:</strong> {material.kode_bahan}</p>
-          <p><strong>Color:</strong> {material.kode_warna}</p>
+          <p><strong>Material:</strong> {material.kode_bahan || 'TBD'}</p>
+          <p><strong>Color:</strong> {material.kode_warna || 'TBD'}</p>
         </div>
       )}
     </div>
   )
 }
-
-export default App
